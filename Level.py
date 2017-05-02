@@ -36,6 +36,7 @@ class Level():
                                        self.tileSize)
                                   
                 if c == 'p':
+                    print "P"
                     PlayerPac(5,
                                        [x*self.tileSize + self.tileSize/2,
                                         y*self.tileSize + self.tileSize/2],
