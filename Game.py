@@ -1,7 +1,7 @@
 import pygame, sys, math, random
 
 from Cheese import *
-from Pac import *
+from Ghost import *
 from PlayerPac import *
 from Wall import *
 from Level import *
@@ -22,18 +22,28 @@ all = pygame.sprite.OrderedUpdates()
 players = pygame.sprite.Group()
 cheeses = pygame.sprite.Group()
 walls = pygame.sprite.Group()
-pacs = pygame.sprite.Group()
+ghosts = pygame.sprite.Group()
 hud = pygame.sprite.Group()
 
 PlayerPac.containers = all, players
 Cheese.containers = all, cheeses
 Wall.containers = all, walls
-Pac.containers = all, pacs
+Ghost.containers = all, ghosts
 Score.containers = all, hud
 
 level = Level("level1.lvl")
 player = players.sprites()[0]
 score = Score([100, height - 30])
+
+levNum = 1
+
+while len(ghosts.sprites()) < levNum + 1:
+    s = [0,0]
+    while s == [0,0]:
+        s = [5 * random.randint(-1,1), 5* random.randint(-1,1)]
+    p = [random.randint(25, width-25), random.randint(25, height-25)]
+    Ghost("RedTestPac.png", s, p, 25)
+    pygame.sprite.groupcollide(ghosts, walls, True, False)
 
 while True:
     for event in pygame.event.get():
