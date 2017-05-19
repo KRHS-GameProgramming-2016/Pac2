@@ -1,9 +1,9 @@
 import pygame, sys, math
-from Pac import *
+from Ghost import *
 
-class PlayerPac(Pac):
+class PlayerPac(Ghost):
     def __init__(self, maxSpeed =5 , pos=[0,0], size = None):
-        Pac.__init__(self, "RedTestPac.png", [0,0], pos, size)
+        Ghost.__init__(self, "RedTestPac.png", [0,0], pos, size)
         print "HEllO"
         self.maxSpeed = maxSpeed
         self.images = [pygame.image.load("Resources/PlayerPac/PlayerTestPac1.png"),
@@ -15,7 +15,7 @@ class PlayerPac(Pac):
         self.animationTimerMax = .2 * 60 #seconds * 60 fps
         
     def move(self):
-        Pac.move(self)
+        Ghost.move(self)
         
     def update(self, size):
         self.move()
