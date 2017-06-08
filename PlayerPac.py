@@ -13,11 +13,13 @@ class PlayerPac(Ghost):
         self.maxFrame = len(self.images) - 1
         self.animationTimer = 0
         self.animationTimerMax = .2 * 60 #seconds * 60 fps
+        self.living = True
         
     def move(self):
         Ghost.move(self)
         
-    def update(self, size):
+    def update(self, *args):
+        size = args[0]
         self.move()
         self.animate()
         self.bounceScreen(size)

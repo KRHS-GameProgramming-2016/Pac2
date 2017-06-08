@@ -9,7 +9,7 @@ class Wall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = pos)
         
         
-    def update(self, size):
+    def update(self, *args):
         pass
         
         

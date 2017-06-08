@@ -9,13 +9,15 @@ class Ghost(pygame.sprite.Sprite):
         if size:
             self.image = pygame.transform.scale(self.image, [size,size])
         self.rect = self.image.get_rect(center = pos)
-        self.speedx = speed[0]
-        self.speedy = speed[1]
+        self.maxSpeed = 3
+        self.speedx = 0
+        self.speedy = 0
         self.speed = [self.speedx, self.speedy]
         self.radius = self.rect.width/2 -1
         self.didBounceX = False
         self.didBounceY = False
         self.living = True
+        self.detectRadius = 100
         
     def move(self):
         self.didBounceX = False
@@ -23,9 +25,33 @@ class Ghost(pygame.sprite.Sprite):
         self.speed = [self.speedx, self.speedy]
         self.rect = self.rect.move(self.speed)
         
-    def update(self, size):
+    def update(self, *args):
+        size = args[0]
+        player = args[1]
+        self.detectPlayer(player)
         self.move()
         self.bounceScreen(size)
+        
+    def detectPlayer(self, player):
+        if self.dist(player.rect.center) < self.detectRadius:
+            xdiff = self.rect.center[0] - player.rect.center[0]
+            ydiff = self.rect.center[1] - player.rect.center[1]
+            
+            if xdiff > 0:
+                self.speedx = -self.maxSpeed
+            elif xdiff < 0:
+                self.speedx = self.maxSpeed
+            else:
+                self.speedx = 0
+                
+            if ydiff > 0:
+                self.speedy = -self.maxSpeed
+            elif xdiff < 0:
+                self.speedy = self.maxSpeed
+            else:
+                self.speedy = 0
+            return True
+        return False
         
     def bounceScreen(self, size):
         width = size[0]
@@ -60,5 +86,13 @@ class Ghost(pygame.sprite.Sprite):
         y2 = pt[1]
         xDiff = x1 - x2
         yDiff = y1 - y2
-        return math.sqrt(xDiff**2 + yDiff**2)  
+        return math.sqrt(xDiff**2 + yDiff**2) 
+        
+    def bounceEnemy(self, other):
+        if other != self:
+            self.speedx = -self.speedx
+            self.speedy = -self.speedy
+            self.didBounceX = True
+            self.didBounceY = True
+            self.move() 
     

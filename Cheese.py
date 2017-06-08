@@ -8,5 +8,5 @@ class Cheese(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image, [size,size])
         self.rect = self.image.get_rect(center = pos)
         
-    def update(self, size):
+    def update(self, *args):
         pass
